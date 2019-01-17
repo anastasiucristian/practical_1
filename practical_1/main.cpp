@@ -36,6 +36,7 @@ void Load() {
   // reset Ball Position
   ball.setPosition(gameWidth / 2, gameHeight / 2);
   ballVelocity = {(server ? 100.0f : -100.0f), 60.0f};
+
 }
 
 void reset() {
@@ -113,21 +114,19 @@ void Update(RenderWindow &window) {
     reset();
   }else if (
 	//ball is inline or behind paddle
-	bx < paddleSize.x &&
+	bx < paddles[0].getPosition().x &&
 	//AND ball is below top edge of paddle
 	by > paddles[0].getPosition().y - (paddleSize.y * 0.5) &&
 	//AND ball is above bottom edge of paddle
 	by < paddles[0].getPosition().y + (paddleSize.y * 0.5)
 	) {
-    ballVelocity.y *= -1.1f;
     ballVelocity.x *= -1.1f;
   } else if(//ball is inline or behind paddle
-	bx < paddleSize.x &&
+	bx > paddles[1].getPosition().x &&
 	//AND ball is below top edge of paddle
-	by < paddles[1].getPosition().y - (paddleSize.y * 0.5) &&
+	by > paddles[1].getPosition().y - (paddleSize.y * 0.5) &&
 	//AND ball is above bottom edge of paddle
-	by > paddles[1].getPosition().y + (paddleSize.y * 0.5)){
-    ballVelocity.y *- -1.1f;
+	by < paddles[1].getPosition().y + (paddleSize.y * 0.5)){
     ballVelocity.x *= -1.1f;
   }
 }
